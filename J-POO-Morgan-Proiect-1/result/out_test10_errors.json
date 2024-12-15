@@ -1,0 +1,60 @@
+[ {
+  "command" : "deleteAccount",
+  "output" : {
+    "success" : "Account deleted",
+    "timestamp" : 10
+  },
+  "timestamp" : 10
+}, {
+  "command" : "deleteAccount",
+  "output" : {
+    "error" : "Account couldn't be deleted - see org.poo.transactions for details",
+    "timestamp" : 15
+  },
+  "timestamp" : 15
+}, {
+  "command" : "printUsers",
+  "output" : [ {
+    "firstName" : "Marinela",
+    "lastName" : "Puscasu",
+    "email" : "Marinela_Puscasu@hotmail.ro",
+    "accounts" : [ {
+      "balance" : 2389.0,
+      "currency" : "RON",
+      "type" : "classic",
+      "cards" : [ ],
+      "IBAN" : "RO58POOB7344468893732422"
+    } ]
+  }, {
+    "firstName" : "Alice",
+    "lastName" : "Dima",
+    "email" : "Alice_Dima@hotmail.ro",
+    "accounts" : [ ]
+  }, {
+    "firstName" : "Jan",
+    "lastName" : "Ababe",
+    "email" : "Jan_Ababe@outlook.ro",
+    "accounts" : [ {
+      "balance" : 670.0,
+      "currency" : "RON",
+      "type" : "classic",
+      "cards" : [ ],
+      "IBAN" : "RO90POOB5450777208072365"
+    } ]
+  }, {
+    "firstName" : "Andre",
+    "lastName" : "Martin",
+    "email" : "Andre_Martin@gmail.fr",
+    "accounts" : [ {
+      "balance" : 842.0,
+      "currency" : "EUR",
+      "type" : "classic",
+      "cards" : [ {
+        "cardNumber" : "8207906978464446",
+        "status" : "active"
+      } ],
+      "IBAN" : "RO65POOB8944016386845896"
+    } ]
+  } ],
+  "timestamp" : 22
+} ]
