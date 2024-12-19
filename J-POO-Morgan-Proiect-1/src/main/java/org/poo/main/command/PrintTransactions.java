@@ -12,12 +12,19 @@ public class PrintTransactions extends Command {
     @Getter @Setter
     private String email;
 
-    public PrintTransactions(ArrayList<Client> clients, String email, int timestamp) {
+    public PrintTransactions(final ArrayList<Client> clients, final String email,
+                             final int timestamp) {
         super(clients, timestamp);
         this.email = email;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accepts a visitor that processes this PrintTransactions command.
+     *
+     * @param visitor The visitor to process this command.
+     * @return An ObjectNode result from the visitor's operation.
+     */
+    public ObjectNode accept(final Visitor visitor) {
         return visitor.visitPrintTransactions(this);
     }
 }

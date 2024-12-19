@@ -8,15 +8,22 @@ import org.poo.main.user.Client;
 
 import java.util.ArrayList;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CreateOneTimeCard extends CreateCard {
 
-    public CreateOneTimeCard(ArrayList<Client> clients, String account, String email,
-                             int timestamp) {
+    public CreateOneTimeCard(final ArrayList<Client> clients, final String account,
+                             final String email, final int timestamp) {
         super(clients, account, email, timestamp);
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accepts a visitor that processes this CreateOneTimeCard command.
+     *
+     * @param visitor The visitor to process this command.
+     * @return An ObjectNode result from the visitor's operation.
+     */
+    public ObjectNode accept(final Visitor visitor) {
         visitor.visitCreateOneTimeCard(this);
         return null;
     }

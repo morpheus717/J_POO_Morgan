@@ -9,8 +9,9 @@ import org.poo.main.user.Exchange;
 
 import java.util.ArrayList;
 
-@Getter @Setter
-public class SendMoney extends ExchangeCommand {
+@Getter
+@Setter
+public final class SendMoney extends ExchangeCommand {
     private String senderAcc;
     private double amount;
     private String receiverAcc;
@@ -18,10 +19,9 @@ public class SendMoney extends ExchangeCommand {
     private String senderEmail;
     private boolean insufficientFunds;
 
-
-    public SendMoney(ArrayList<Exchange> rates, ArrayList<Client> clients, String senderAcc,
-                     double amount, String receiverAcc, String description, String email,
-                     int timestamp) {
+    public SendMoney(final ArrayList<Exchange> rates, final ArrayList<Client> clients,
+                     final String senderAcc, final double amount, final String receiverAcc,
+                     final String description, final String email, final int timestamp) {
         super(rates, clients, timestamp);
         this.senderAcc = senderAcc;
         this.amount = amount;
@@ -31,7 +31,14 @@ public class SendMoney extends ExchangeCommand {
         this.insufficientFunds = false;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accepts a visitor to perform the 'SendMoney' operation.
+     *
+     * @param visitor The visitor that will handle this command.
+     * @return The result of the visitor's operation, typically an ObjectNode.
+     */
+    @Override
+    public ObjectNode accept(final Visitor visitor) {
         return visitor.visitSendMoney(this);
     }
 }

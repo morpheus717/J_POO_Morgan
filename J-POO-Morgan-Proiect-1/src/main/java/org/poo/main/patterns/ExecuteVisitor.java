@@ -1,30 +1,44 @@
 package org.poo.main.patterns;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.poo.main.command.*;
-import org.poo.main.user.*;
-import org.poo.main.user.transactions.CardPaymentTransaction;
+import org.poo.main.command.AddAccount;
+import org.poo.main.command.AddFunds;
+import org.poo.main.user.Card;
+import org.poo.main.user.OneTimeCard;
+import org.poo.main.command.AddInterest;
+import org.poo.main.command.SpendingsReport;
+import org.poo.main.command.CheckCardStatus;
+import org.poo.main.command.CreateCard;
+import org.poo.main.command.CreateOneTimeCard;
+import org.poo.main.command.DeleteAccount;
+import org.poo.main.command.DeleteCard;
+import org.poo.main.command.PayOnline;
+import org.poo.main.command.PrintTransactions;
+import org.poo.main.command.PrintUsers;
+import org.poo.main.command.Report;
+import org.poo.main.command.SendMoney;
+import org.poo.main.command.SetAlias;
+import org.poo.main.command.SetMinBalance;
+import org.poo.main.command.SplitPayment;
+import org.poo.main.command.ChangeInterestRate;
+import org.poo.main.user.Account;
+import org.poo.main.user.Client;
+import org.poo.main.user.SavingsAccount;
+import org.poo.main.user.transactions.FailedSplitPayment;
 import org.poo.main.user.transactions.SplitPaymentTransaction;
 import org.poo.main.user.transactions.Transaction;
 import org.poo.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class ExecuteVisitor implements Visitor {
 
-    public ObjectNode createErrorResponse(String messageName, String message, int timestamp) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode errorResponse = mapper.createObjectNode();
-        errorResponse.put("timestamp", timestamp);
-        errorResponse.put(messageName, message);
-        return errorResponse;
-    }
-
+    /**
+     * The method returns an Object Node that contains all active users
+     */
     @Override
-    public ObjectNode visitPrintUsers(PrintUsers command) {
+    public ObjectNode visitPrintUsers(final PrintUsers command) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode out = mapper.createObjectNode();
         out.put("command", "printUsers");
@@ -33,42 +47,59 @@ public class ExecuteVisitor implements Visitor {
         return out;
     }
 
-    public void visitAddAccount(AddAccount command) {
+    /**
+     * The method creates a new account and adds it to the given client
+     */
+    public void visitAddAccount(final AddAccount command) {
         Client client = command.findByEmail(command.getEmail());
         command.setGeneratedIban(Utils.generateIBAN());
 
         if (client != null) {
-            if (command.getAccountType().equals("classic"))
+            if (command.getAccountType().equals("classic")) {
                 client.getAccounts().add(new Account(command.getGeneratedIban(), 0.0,
                         command.getCurrency(), command.getAccountType()));
-            else if (command.getAccountType().equals("savings"))
+            } else if (command.getAccountType().equals("savings")) {
                 client.getAccounts().add(new SavingsAccount(command.getGeneratedIban(), 0.0,
                         command.getCurrency(), command.getAccountType()));
+            }
         }
     }
 
-    public void visitCreateCard(CreateCard command) {
+    /**
+     * The method creates a card and attaches it to the given account
+     */
+    public void visitCreateCard(final CreateCard command) {
         Account account = command.findByIban(command.getAccount(),
                 command.findByEmail(command.getEmail()));
         command.setGeneratedNumber(Utils.generateCardNumber());
-        if (account == null)
+        if (account == null) {
             return;
+        }
         account.getCards().add(new Card(command.getGeneratedNumber(), "active"));
     }
 
-    public void visitCreateOneTimeCard(CreateOneTimeCard command) {
+    /**
+     * The method creates a one time card and attaches it to the given account
+     */
+    public void visitCreateOneTimeCard(final CreateOneTimeCard command) {
         Account account = command.findByIban(command.getAccount(),
                 command.findByEmail(command.getEmail()));
         command.setGeneratedNumber(Utils.generateCardNumber());
         account.getCards().add(new OneTimeCard(command.getGeneratedNumber(), "active"));
     }
 
-    public void visitAddFunds(AddFunds command) {
+    /**
+     * This method modifies the balance of an account after finding it
+     */
+    public void visitAddFunds(final AddFunds command) {
         Account acc = command.findByIban(command.getAccount());
         acc.setBalance(acc.getBalance() + command.getAmount());
     }
 
-    public ObjectNode visitDeleteAccount(DeleteAccount command) {
+    /**
+     * This method finds the account and the client it is attached to and deletes it
+     */
+    public ObjectNode visitDeleteAccount(final DeleteAccount command) {
         Client client = command.findByEmail(command.getEmail());
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode out = mapper.createObjectNode();
@@ -84,6 +115,9 @@ public class ExecuteVisitor implements Visitor {
             out2.put("timestamp", command.getTimestamp());
             out.put("output", out2);
             out.put("timestamp", command.getTimestamp());
+            Transaction transaction = new Transaction(command.getTimestamp(),
+                    "Account couldn't be deleted - there are funds remaining");
+            toBeDeleted.getTransactions().add(transaction);
             return out;
         }
         client.getAccounts().remove(toBeDeleted);
@@ -94,7 +128,10 @@ public class ExecuteVisitor implements Visitor {
         return out;
     }
 
-    public void visitDeleteCard(DeleteCard command) {
+    /**
+     * This method finds a card and the account it is attached to and deletes the card
+     */
+    public void visitDeleteCard(final DeleteCard command) {
         Client client = command.findByEmail(command.getEmail());
         Account acc = command.findByCardNumber(command.getCardNumber(), client);
         Card card = command.findByNumber(command.getCardNumber(), client);
@@ -105,12 +142,20 @@ public class ExecuteVisitor implements Visitor {
         acc.getCards().remove(card);
     }
 
-    public void visitSetMinBalance(SetMinBalance command) {
+    /**
+     * This method sets a minimum balance that will block a card if it gets exceeded,
+     * but only if we check the status of the card, as the task demands.
+     * It's like a Schrodinger's card.
+     */
+    public void visitSetMinBalance(final SetMinBalance command) {
         Account acc = command.findByIban(command.getAccountName());
         acc.setMinBalance(command.getAmount());
     }
 
-    public ObjectNode visitCheckCardStatus(CheckCardStatus command) {
+    /**
+     * This method checks the status of a card after finding it
+     */
+    public ObjectNode visitCheckCardStatus(final CheckCardStatus command) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode out = mapper.createObjectNode();
         Account acc = command.findByCardNumber(command.getCardNumber());
@@ -129,7 +174,11 @@ public class ExecuteVisitor implements Visitor {
         return null;
     }
 
-    public ObjectNode visitPayOnline(PayOnline command) {
+    /**
+     * This method executes an online payment based on the command while taking
+     * into account all the corner cases
+     */
+    public ObjectNode visitPayOnline(final PayOnline command) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode out = mapper.createObjectNode();
         ObjectNode out2 = mapper.createObjectNode();
@@ -144,17 +193,17 @@ public class ExecuteVisitor implements Visitor {
         if (client == null) {
             return null;
         }
-        Account acc = command.findByCardNumber(command.getCardNumber(), client);
-
-        if (acc == null) {
-            return out;
-        }
-        command.setPreviousBalance(acc.getBalance());
-        Card card = command.findByCardNumber(command.getCardNumber(), acc);
-
+        Card card = command.findByNumber(command.getCardNumber());
         if (card == null) {
             return out;
         }
+        if (command.findByNumber(command.getCardNumber(), client) == null) {
+            return null;
+        }
+
+        Account acc = command.findByCardNumber(command.getCardNumber(), client);
+        command.setPreviousBalance(acc.getBalance());
+
         if (card.getStatus().equals("frozen")) {
             return null;
         }
@@ -162,11 +211,14 @@ public class ExecuteVisitor implements Visitor {
         return null;
     }
 
-    public ObjectNode visitSendMoney(SendMoney command) {
+    /**
+     * This method handles the execution of the send money command and also
+     * takes into account all the corner cases
+     */
+    public ObjectNode visitSendMoney(final SendMoney command) {
         Client senderClient = command.findByEmail(command.getSenderEmail());
 
         if (senderClient == null) {
-            // return createErrorResponse("Invalid sender email");
             return null;
         }
         Account sender = command.findByIban(command.getSenderAcc(), senderClient);
@@ -178,13 +230,11 @@ public class ExecuteVisitor implements Visitor {
 
         if (receiver == null) {
             receiver = command.findByAlias(command.getReceiverAcc());
-            // aparent aliasurile sunt globale
         }
         if (receiver == null) {
             return null;
         }
         if (sender.getBalance() < command.getAmount()) {
-            // return createErrorResponse("Invalid sender or receiver");
             command.setInsufficientFunds(true);
             return null;
         }
@@ -194,35 +244,59 @@ public class ExecuteVisitor implements Visitor {
             return null;
         }
         double receivedMoney = command.exchangeMoney(sender.getCurrency(), receiver.getCurrency(),
-                                                     command.getAmount());
+                command.getAmount());
         receiver.setBalance(receiver.getBalance() + receivedMoney);
         return null;
     }
 
-    public void visitSetAlias(SetAlias command) {
+    /**
+     * The method finds the client that wants to set an alias and then sets it
+     */
+    public void visitSetAlias(final SetAlias command) {
         Client client = command.findByEmail(command.getEmail());
         client.getAliases().put(command.getAlias(), command.getAccIban());
     }
 
+    /**
+     * avoid errors
+     */
     @Override
-    public ObjectNode visitPrintTransactions(PrintTransactions command) {
+    public ObjectNode visitPrintTransactions(final PrintTransactions command) {
         return null;
     }
 
-    public void visitChangeInterest(ChangeInterestRate command) {
+    /**
+     * This function changes the interest rate after finding the corresponding account
+     */
+    public ObjectNode visitChangeInterest(final ChangeInterestRate command) {
         Account acc = command.findByIban(command.getAccount());
-        acc.modifyInterestRate(command.getInterestRate());
+        return acc.modifyInterestRate(command);
     }
 
-    public void visitSplitPayment(SplitPayment command) {
+    /**
+     * It has been proved significantly more efficient to execute the command
+     * and generate and store the transaction at the same time to avoid excessive memory usage
+     * so with the risk of the method being messy and too long, an exception was made
+     * and this function does that
+     */
+    public void visitSplitPayment(final SplitPayment command) {
         double individualAmount = command.getAmount() / command.getAccounts().size();
         ArrayList<Account> accounts = new ArrayList<>();
-        for (int i = 0; i < command.getAccounts().size(); i++) {
+        for (int i = command.getAccounts().size() - 1; i >= 0; i--) {
             Account acc = command.findByIban(command.getAccounts().get(i));
             if (acc == null) {
                 return; // account not found
             }
             if (acc.getBalance() < individualAmount) {
+                for (int j = 0; j < command.getAccounts().size(); j++) {
+                    Account acc2 = command.findByIban(command.getAccounts().get(j));
+                    FailedSplitPayment transaction = new FailedSplitPayment(String
+                            .format("Account %s has insufficient funds for a split payment.",
+                                    acc.getIban()), String.format("Split payment of %.2f %s",
+                            command.getAmount(), command.getCurrency()), command.getTimestamp(),
+                            command.getCurrency(), individualAmount, command.getAccounts());
+                    acc2.getTransactions().add(transaction);
+                }
                 return; // not enough money
             }
             accounts.add(acc);
@@ -232,59 +306,34 @@ public class ExecuteVisitor implements Visitor {
                     acc.getCurrency(), individualAmount);
             acc.setBalance(acc.getBalance() - convertedAmount);
             SplitPaymentTransaction transaction = new SplitPaymentTransaction(
-                    String.format("Split payment of %.2f %s", command.getAmount(), command.getCurrency()),
-                    command.getTimestamp(), command.getCurrency(), individualAmount, command.getAccounts());
+                    String.format("Split payment of %.2f %s", command.getAmount(),
+                            command.getCurrency()),
+                    command.getTimestamp(), command.getCurrency(), individualAmount,
+                    command.getAccounts());
             acc.getTransactions().add(transaction);
         }
         command.setSuccess(true);
     }
 
-    public ObjectNode visitReport(Report command) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode out = mapper.createObjectNode();
-        ObjectNode out2 = mapper.createObjectNode();
-        Account acc = command.findByIban(command.getAccount());
-
-        if (acc == null) {
-            return command.accountNotFound();
-        }
-        out2.put("IBAN", acc.getIban());
-        out2.put("balance", acc.getBalance());
-        out2.put("currency", acc.getCurrency());
-        out2.put("transactions", acc.transactionsToJson(command.getStartTimestamp(),
-                command.getEndTimestamp()));
-        out.put("command", "report");
-        out.put("output", out2);
-        out.put("timestamp", command.getTimestamp());
-        return out;
+    /**
+     * avoid errors
+     */
+    public ObjectNode visitReport(final Report command) {
+        return null;
     }
 
-    public ObjectNode visitSpendingsReport(SpendingsReport command) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode out = mapper.createObjectNode();
-        ObjectNode out2 = mapper.createObjectNode();
-        Account acc = command.findByIban(command.getAccount());
-        ArrayList<CardPaymentTransaction> spendings = new ArrayList<>();
+    /**
+     * avoid errors
+     */
+    public ObjectNode visitSpendingsReport(final SpendingsReport command) {
+        return null;
+    }
 
-        if (acc == null) {
-            return command.accountNotFound();
-        }
-        out.put("command", "spendingsReport");
-        out2.put("IBAN", acc.getIban());
-        out2.put("balance", acc.getBalance());
-        out2.put("currency", acc.getCurrency());
-        for (Transaction transaction : acc.getTransactions()) {
-            if (transaction.filterSpendings() != null && transaction.getTimestamp()
-                    >= command.getStartTimestamp() && transaction.getTimestamp() <= command.getEndTimestamp()) {
-                spendings.add(transaction.filterSpendings());
-            }
-        }
-        out2.put("transactions", acc.transactionsToJson(command.getStartTimestamp(),
-                command.getEndTimestamp(), spendings));
-        spendings.sort(Comparator.comparing(CardPaymentTransaction::getCommerciant));
-        out2.put("commerciants", acc.commerciantsToJson(spendings));
-        out.put("output", out2);
-        out.put("timestamp", command.getTimestamp());
-        return out;
+    /**
+     * The method calls the necessary function from the account class to modify the balance
+     */
+    public ObjectNode visitAddInterest(final AddInterest command) {
+        Account acc = command.findByIban(command.getAccount());
+        return acc.addInterest(command);
     }
 }

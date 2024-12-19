@@ -16,8 +16,8 @@ public class AddAccount extends Command {
     private double interestRate;
     private String generatedIban;
 
-    public AddAccount(ArrayList<Client> clients, String email, String currency, String accountType,
-                      double interestRate, int timestamp) {
+    public AddAccount(final ArrayList<Client> clients, final String email, final String currency,
+                      final String accountType, final double interestRate, final int timestamp) {
         super(clients, timestamp);
         this.email = email;
         this.currency = currency;
@@ -25,8 +25,15 @@ public class AddAccount extends Command {
         this.interestRate = interestRate;
     }
 
+    /**
+     * Accept method for the visitor pattern.
+     * This method allows the visitor to process the AddAccount command.
+     *
+     * @param visitor The visitor that processes the AddAccount command.
+     * @return A result after processing the AddAccount command.
+     */
     @Override
-    public ObjectNode accept(Visitor visitor) {
+    public ObjectNode accept(final Visitor visitor) {
         visitor.visitAddAccount(this);
         return null;
     }

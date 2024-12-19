@@ -15,18 +15,29 @@ public class Report extends Command {
     private int startTimestamp;
     private int endTimestamp;
 
-    public Report(String account, int startTimestamp, int endTimestamp,
-                  ArrayList<Client> clients, int timestamp) {
+    public Report(final String account, final int startTimestamp, final int endTimestamp,
+                  final ArrayList<Client> clients, final int timestamp) {
         super(clients, timestamp);
         this.account = account;
         this.startTimestamp = startTimestamp;
         this.endTimestamp = endTimestamp;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accept method for the visitor pattern.
+     *
+     * @param visitor The visitor that processes the report.
+     * @return A response from the visitor processing the report.
+     */
+    public ObjectNode accept(final Visitor visitor) {
         return visitor.visitReport(this);
     }
 
+    /**
+     * Generates a response indicating that the account was not found.
+     *
+     * @return A JSON object indicating the account was not found, with relevant details.
+     */
     public ObjectNode accountNotFound() {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode out = mapper.createObjectNode();

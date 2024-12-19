@@ -8,18 +8,28 @@ import org.poo.main.user.Client;
 
 import java.util.ArrayList;
 
-@Getter @Setter
-public class DeleteAccount extends Command {
+@Getter
+@Setter
+public final class DeleteAccount extends Command {
     private String accountName;
     private String email;
 
-    public DeleteAccount(ArrayList<Client> clients, String accountName, String email, int timestamp) {
+    public DeleteAccount(final ArrayList<Client> clients, final String accountName,
+                         final String email, final int timestamp) {
         super(clients, timestamp);
         this.accountName = accountName;
         this.email = email;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accept method for the visitor pattern.
+     * This method allows the visitor to process the DeleteAccount command.
+     *
+     * @param visitor The visitor that processes the DeleteAccount command.
+     * @return A result after processing the DeleteAccount command.
+     */
+    @Override
+    public ObjectNode accept(final Visitor visitor) {
         return visitor.visitDeleteAccount(this);
     }
 }

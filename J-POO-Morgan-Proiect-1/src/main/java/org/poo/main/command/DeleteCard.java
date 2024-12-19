@@ -14,13 +14,21 @@ public class DeleteCard extends Command {
     private String email;
     private String account;
 
-    public DeleteCard(ArrayList<Client> clients, String cardNumber, String email, int timestamp) {
+    public DeleteCard(final ArrayList<Client> clients, final String cardNumber,
+                      final String email, final int timestamp) {
         super(clients, timestamp);
         this.cardNumber = cardNumber;
         this.email = email;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accept method for the visitor pattern.
+     * This method allows the visitor to process the DeleteCard command.
+     *
+     * @param visitor The visitor that processes the DeleteCard command.
+     * @return A result after processing the DeleteCard command (can be null).
+     */
+    public ObjectNode accept(final Visitor visitor) {
         visitor.visitDeleteCard(this);
         return null;
     }

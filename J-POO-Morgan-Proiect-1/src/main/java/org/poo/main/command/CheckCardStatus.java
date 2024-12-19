@@ -11,12 +11,20 @@ public class CheckCardStatus extends Command {
     @Getter
     private String cardNumber;
 
-    public CheckCardStatus(ArrayList<Client> clients, String cardNumber, int timestamp) {
+    public CheckCardStatus(final ArrayList<Client> clients, final String cardNumber,
+                           final int timestamp) {
         super(clients, timestamp);
         this.cardNumber = cardNumber;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accept method for the visitor pattern.
+     * This method allows the visitor to process the CheckCardStatus command.
+     *
+     * @param visitor The visitor that processes the CheckCardStatus command.
+     * @return A result after processing the CheckCardStatus command.
+     */
+    public ObjectNode accept(final Visitor visitor) {
         return visitor.visitCheckCardStatus(this);
     }
 }

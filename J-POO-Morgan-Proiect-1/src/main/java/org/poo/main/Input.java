@@ -25,64 +25,58 @@ public class Input {
                             exchangeInput.getRate());
     }
     public static Command processCommandInput(CommandInput commandInput) {
-        switch (commandInput.getCommand()) {
-            case "printUsers":
-                return new PrintUsers(clients, commandInput.getTimestamp());
-             case "printTransactions":
-                return new PrintTransactions(clients,commandInput.getEmail(),
-                        commandInput.getTimestamp());
-            case "addAccount":
-                return new AddAccount(clients, commandInput.getEmail(), commandInput.getCurrency(),
-                        commandInput.getAccountType(), commandInput.getInterestRate(),
-                        commandInput.getTimestamp());
-            case "addFunds":
-                return new AddFunds(clients, commandInput.getAccount(), commandInput.getAmount(),
-                        commandInput.getTimestamp());
-            case "createCard":
-                return new CreateCard(clients, commandInput.getAccount(), commandInput.getEmail(),
-                        commandInput.getTimestamp());
-            case "createOneTimeCard":
-                return new CreateOneTimeCard(clients, commandInput.getAccount(), commandInput.getEmail(),
-                        commandInput.getTimestamp());
-            case "deleteAccount":
-                return new DeleteAccount(clients, commandInput.getAccount(),
-                        commandInput.getEmail(), commandInput.getTimestamp());
-            case "deleteCard":
-                return new DeleteCard(clients, commandInput.getCardNumber(),
-                        commandInput.getEmail(), commandInput.getTimestamp());
-            case "setMinimumBalance":
-                return new SetMinBalance(clients, commandInput.getAmount(),
-                        commandInput.getAccount(), commandInput.getTimestamp());
-            case "payOnline":
-                return new PayOnline(exchanges, clients, commandInput.getCardNumber(),
-                        commandInput.getAmount(), commandInput.getCurrency(),
-                        commandInput.getDescription(), commandInput.getCommerciant(),
-                        commandInput.getEmail(), commandInput.getTimestamp());
-            case "sendMoney":
-                return new SendMoney(exchanges, clients, commandInput.getAccount(),
-                        commandInput.getAmount(), commandInput.getReceiver(),
-                        commandInput.getDescription(), commandInput.getEmail(), commandInput.getTimestamp());
-            case "setAlias":
-                return new SetAlias(clients, commandInput.getAlias(), commandInput.getEmail(),
-                        commandInput.getAccount(), commandInput.getTimestamp());
-            case "checkCardStatus":
-                return new CheckCardStatus(clients, commandInput.getCardNumber(),
-                        commandInput.getTimestamp());
-            case "changeInterestRate":
-                return new ChangeInterestRate(clients, commandInput.getAccount(),
-                        commandInput.getInterestRate(), commandInput.getTimestamp());
-            case "splitPayment":
-                return new SplitPayment(clients, exchanges, (ArrayList<String>) commandInput.getAccounts(),
-                        commandInput.getAmount(), commandInput.getCurrency(), commandInput.getTimestamp());
-            case "report":
-                return new Report(commandInput.getAccount(), commandInput.getStartTimestamp(),
-                        commandInput.getEndTimestamp(), clients, commandInput.getTimestamp());
-            case "spendingsReport":
-                return new SpendingsReport(commandInput.getAccount(),
-                        commandInput.getStartTimestamp(), commandInput.getEndTimestamp(),
-                        clients, commandInput.getTimestamp());
-        }
-        return null;
+        return switch (commandInput.getCommand()) {
+            case "printUsers" -> new PrintUsers(clients, commandInput.getTimestamp());
+            case "printTransactions" -> new PrintTransactions(clients,
+                    commandInput.getEmail(), commandInput.getTimestamp());
+            case "addAccount" -> new AddAccount(clients, commandInput.getEmail(),
+                    commandInput.getCurrency(), commandInput.getAccountType(),
+                    commandInput.getInterestRate(),
+                    commandInput.getTimestamp());
+            case "addFunds" -> new AddFunds(clients, commandInput.getAccount(),
+                    commandInput.getAmount(), commandInput.getTimestamp());
+            case "createCard" -> new CreateCard(clients, commandInput.getAccount(),
+                    commandInput.getEmail(), commandInput.getTimestamp());
+            case "createOneTimeCard" ->
+                    new CreateOneTimeCard(clients, commandInput.getAccount(),
+                            commandInput.getEmail(), commandInput.getTimestamp());
+            case "deleteAccount" -> new DeleteAccount(clients, commandInput.getAccount(),
+                    commandInput.getEmail(), commandInput.getTimestamp());
+            case "deleteCard" -> new DeleteCard(clients, commandInput.getCardNumber(),
+                    commandInput.getEmail(), commandInput.getTimestamp());
+            case "setMinimumBalance" -> new SetMinBalance(clients, commandInput.getAmount(),
+                    commandInput.getAccount(), commandInput.getTimestamp());
+            case "payOnline" -> new PayOnline(exchanges, clients, commandInput.getCardNumber(),
+                    commandInput.getAmount(), commandInput.getCurrency(),
+                    commandInput.getDescription(), commandInput.getCommerciant(),
+                    commandInput.getEmail(), commandInput.getTimestamp());
+            case "sendMoney" -> new SendMoney(exchanges, clients,
+                    commandInput.getAccount(),
+                    commandInput.getAmount(), commandInput.getReceiver(),
+                    commandInput.getDescription(), commandInput.getEmail(),
+                    commandInput.getTimestamp());
+            case "setAlias" -> new SetAlias(clients, commandInput.getAlias(),
+                    commandInput.getEmail(), commandInput.getAccount(),
+                    commandInput.getTimestamp());
+            case "checkCardStatus" -> new CheckCardStatus(clients, commandInput.getCardNumber(),
+                    commandInput.getTimestamp());
+            case "changeInterestRate" -> new ChangeInterestRate(clients,
+                    commandInput.getAccount(), commandInput.getInterestRate(),
+                    commandInput.getTimestamp());
+            case "splitPayment" -> new SplitPayment(clients, exchanges,
+                    (ArrayList<String>) commandInput.getAccounts(),
+                    commandInput.getAmount(), commandInput.getCurrency(),
+                    commandInput.getTimestamp());
+            case "report" -> new Report(commandInput.getAccount(),
+                    commandInput.getStartTimestamp(), commandInput.getEndTimestamp(),
+                    clients, commandInput.getTimestamp());
+            case "spendingsReport" -> new SpendingsReport(commandInput.getAccount(),
+                    commandInput.getStartTimestamp(), commandInput.getEndTimestamp(),
+                    clients, commandInput.getTimestamp());
+            case "addInterest" -> new AddInterest(clients, commandInput.getAccount(),
+                    commandInput.getTimestamp());
+            default -> null;
+        };
     }
 
     public static ArrayNode processInput(ObjectInput inputData) {

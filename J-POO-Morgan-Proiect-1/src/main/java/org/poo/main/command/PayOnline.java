@@ -10,7 +10,7 @@ import org.poo.main.user.Exchange;
 import java.util.ArrayList;
 
 @Getter @Setter
-public class PayOnline extends ExchangeCommand {
+public final class PayOnline extends ExchangeCommand {
     private String cardNumber;
     private double amount;
     private String currency;
@@ -19,10 +19,11 @@ public class PayOnline extends ExchangeCommand {
     private String email;
     private ArrayList<Exchange> rates;
     private double previousBalance;
-    
-    public PayOnline(ArrayList<Exchange> rates, ArrayList<Client> clients, String cardNumber,
-                     double amount, String currency, String description, String commerciant,
-                     String email, int timestamp) {
+
+    public PayOnline(final ArrayList<Exchange> rates, final ArrayList<Client> clients,
+                     final String cardNumber, final double amount, final String currency,
+                     final String description, final String commerciant,
+                     final String email, final int timestamp) {
         super(rates, clients, timestamp);
         this.cardNumber = cardNumber;
         this.rates = rates;
@@ -33,7 +34,14 @@ public class PayOnline extends ExchangeCommand {
         this.email = email;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accepts a visitor to perform the 'PayOnline' operation.
+     *
+     * @param visitor The visitor that will handle this command.
+     * @return The result of the visitor's operation, typically an ObjectNode.
+     */
+    @Override
+    public ObjectNode accept(final Visitor visitor) {
         return visitor.visitPayOnline(this);
     }
 }

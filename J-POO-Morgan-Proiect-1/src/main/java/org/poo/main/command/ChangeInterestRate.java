@@ -8,21 +8,28 @@ import org.poo.main.user.Client;
 
 import java.util.ArrayList;
 
-@Getter @Setter
-public class ChangeInterestRate extends Command {
+@Getter
+@Setter
+public final class ChangeInterestRate extends Command {
     private String account;
     private double interestRate;
-    private ArrayList<Client> clients;
 
-    public ChangeInterestRate(ArrayList<Client> clients, String account,
-                              double interestRate, int timestamp) {
+    public ChangeInterestRate(final ArrayList<Client> clients, final String account,
+                              final double interestRate, final int timestamp) {
         super(clients, timestamp);
         this.account = account;
         this.interestRate = interestRate;
     }
 
-    public ObjectNode accept(Visitor visitor) {
-        visitor.visitChangeInterest(this);
-        return null;
+    /**
+     * Accept method for the visitor pattern.
+     * This method allows the visitor to process the ChangeInterestRate command.
+     *
+     * @param visitor The visitor that processes the ChangeInterestRate command.
+     * @return A result after processing the ChangeInterestRate command.
+     */
+    @Override
+    public ObjectNode accept(final Visitor visitor) {
+        return visitor.visitChangeInterest(this);
     }
 }

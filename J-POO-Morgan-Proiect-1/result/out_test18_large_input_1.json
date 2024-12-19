@@ -620,13 +620,6 @@
   },
   "timestamp" : 75
 }, {
-  "command" : "payOnline",
-  "output" : {
-    "timestamp" : 77,
-    "description" : "Card not found"
-  },
-  "timestamp" : 77
-}, {
   "command" : "printUsers",
   "output" : [ {
     "firstName" : "Sachi",
@@ -840,6 +833,20 @@
     } ]
   } ],
   "timestamp" : 78
+}, {
+  "command" : "changeInterestRate",
+  "output" : {
+    "description" : "This is not a savings account",
+    "timestamp" : 79
+  },
+  "timestamp" : 79
+}, {
+  "command" : "addInterest",
+  "output" : {
+    "description" : "This is not a savings account",
+    "timestamp" : 80
+  },
+  "timestamp" : 80
 }, {
   "command" : "printUsers",
   "output" : [ {
@@ -1103,6 +1110,13 @@
     "description" : "Card payment",
     "amount" : 21280.0,
     "commerciant" : "KFC"
+  }, {
+    "timestamp" : 48,
+    "description" : "Split payment of 9003.00 RON",
+    "currency" : "RON",
+    "amount" : 900.3,
+    "involvedAccounts" : [ "RO30POOB9523423715747796", "RO90POOB5450777208072365", "RO79POOB3616857825600958", "RO58POOB7344468893732422", "RO65POOB8944016386845896", "RO58POOB2721178218599590", "RO69POOB6209498372540635", "RO76POOB4035116042454483", "RO37POOB7013767509830666", "RO19POOB4981055641668812" ],
+    "error" : "Account RO19POOB4981055641668812 has insufficient funds for a split payment."
   }, {
     "timestamp" : 49,
     "description" : "Card payment",
@@ -1501,6 +1515,13 @@
     "balance" : 16301.759999999998,
     "currency" : "NZD",
     "transactions" : [ {
+      "timestamp" : 48,
+      "description" : "Split payment of 9003.00 RON",
+      "currency" : "RON",
+      "amount" : 900.3,
+      "involvedAccounts" : [ "RO30POOB9523423715747796", "RO90POOB5450777208072365", "RO79POOB3616857825600958", "RO58POOB7344468893732422", "RO65POOB8944016386845896", "RO58POOB2721178218599590", "RO69POOB6209498372540635", "RO76POOB4035116042454483", "RO37POOB7013767509830666", "RO19POOB4981055641668812" ],
+      "error" : "Account RO19POOB4981055641668812 has insufficient funds for a split payment."
+    }, {
       "timestamp" : 52,
       "description" : "EMI payment for a home loan",
       "amount" : "49.89714285714285 NZD",
@@ -1526,13 +1547,6 @@
     } ]
   },
   "timestamp" : 167
-}, {
-  "command" : "payOnline",
-  "output" : {
-    "timestamp" : 169,
-    "description" : "Card not found"
-  },
-  "timestamp" : 169
 }, {
   "command" : "spendingsReport",
   "output" : {
@@ -2178,6 +2192,13 @@
     "amount" : 21280.0,
     "commerciant" : "KFC"
   }, {
+    "timestamp" : 48,
+    "description" : "Split payment of 9003.00 RON",
+    "currency" : "RON",
+    "amount" : 900.3,
+    "involvedAccounts" : [ "RO30POOB9523423715747796", "RO90POOB5450777208072365", "RO79POOB3616857825600958", "RO58POOB7344468893732422", "RO65POOB8944016386845896", "RO58POOB2721178218599590", "RO69POOB6209498372540635", "RO76POOB4035116042454483", "RO37POOB7013767509830666", "RO19POOB4981055641668812" ],
+    "error" : "Account RO19POOB4981055641668812 has insufficient funds for a split payment."
+  }, {
     "timestamp" : 49,
     "description" : "Card payment",
     "amount" : 125.0,
@@ -2361,6 +2382,9 @@
     "card" : "8207906978464446",
     "cardHolder" : "Sachi_Brahmbhatt@protonmail.in",
     "account" : "RO58POOB7344468893732422"
+  }, {
+    "timestamp" : 173,
+    "description" : "Account couldn't be deleted - there are funds remaining"
   } ],
   "timestamp" : 195
 } ]

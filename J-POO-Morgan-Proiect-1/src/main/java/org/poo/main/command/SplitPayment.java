@@ -10,15 +10,15 @@ import org.poo.main.user.Exchange;
 import java.util.ArrayList;
 
 @Getter @Setter
-public class SplitPayment extends ExchangeCommand {
+public final class SplitPayment extends ExchangeCommand {
     private ArrayList<String> accounts;
     private double amount;
     private String currency;
     private boolean success;
 
-    public SplitPayment(ArrayList<Client> clients, ArrayList<Exchange> rates ,
-                        ArrayList<String> accounts, double amount, String currency,
-                        int timestamp) {
+    public SplitPayment(final ArrayList<Client> clients, final ArrayList<Exchange> rates,
+                        final ArrayList<String> accounts, final double amount,
+                        final String currency, final int timestamp) {
         super(rates, clients, timestamp);
         this.accounts = accounts;
         this.amount = amount;
@@ -26,7 +26,14 @@ public class SplitPayment extends ExchangeCommand {
         this.success = false;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accepts a visitor to perform the 'SplitPayment' operation.
+     *
+     * @param visitor The visitor that will handle this command.
+     * @return The result of the visitor's operation, typically an ObjectNode.
+     */
+    @Override
+    public ObjectNode accept(final Visitor visitor) {
         visitor.visitSplitPayment(this);
         return null;
     }

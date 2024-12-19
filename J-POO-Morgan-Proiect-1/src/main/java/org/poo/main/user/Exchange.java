@@ -5,17 +5,17 @@ import lombok.Setter;
 
 @Getter @Setter
 public class Exchange {
-    private String from;
-    private String to;
-    private double rate;
+    private final String from;
+    private final String to;
+    private final double rate;
 
-    public Exchange(String from, String to, double rate) {
+    public Exchange(final String from, final String to, final double rate) {
         this.from = from;
         this.to = to;
         this.rate = rate;
     }
 
-    public Exchange(Exchange exchange) {
+    public Exchange(final Exchange exchange) {
         this.from = exchange.getFrom();
         this.to = exchange.getTo();
         this.rate = exchange.getRate();

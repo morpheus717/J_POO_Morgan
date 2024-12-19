@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class AddAccountTransaction extends Transaction {
 
-    public AddAccountTransaction(int timestamp) {
+    public AddAccountTransaction(final int timestamp) {
         super(timestamp, "New account created");
     }
 

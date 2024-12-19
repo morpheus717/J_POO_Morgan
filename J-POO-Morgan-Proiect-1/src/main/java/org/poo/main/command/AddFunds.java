@@ -8,18 +8,27 @@ import org.poo.main.user.Client;
 
 import java.util.ArrayList;
 
-@Getter @Setter
+@Getter
+@Setter
 public class AddFunds extends Command {
+
     private String account;
     private double amount;
 
-    public AddFunds(ArrayList<Client> clients, String account, double amount, int timestamp) {
+    public AddFunds(final ArrayList<Client> clients, final String account, final double amount,
+                    final int timestamp) {
         super(clients, timestamp);
         this.account = account;
         this.amount = amount;
     }
 
-    public ObjectNode accept(Visitor visitor) {
+    /**
+     * Accepts a visitor that processes this AddFunds command.
+     *
+     * @param visitor The visitor to process this command.
+     * @return An ObjectNode result from the visitor's operation.
+     */
+    public ObjectNode accept(final Visitor visitor) {
         visitor.visitAddFunds(this);
         return null;
     }

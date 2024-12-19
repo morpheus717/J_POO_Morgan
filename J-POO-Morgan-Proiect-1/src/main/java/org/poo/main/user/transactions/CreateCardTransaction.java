@@ -12,8 +12,9 @@ public class CreateCardTransaction extends Transaction {
     private String cardNumber;
     private String cardHolder;
 
-    public CreateCardTransaction(String accountNumber, String cardNumber,
-                                 String cardHolder, String description, int timestamp) {
+    public CreateCardTransaction(final String accountNumber, final String cardNumber,
+                                 final String cardHolder, final String description,
+                                 final int timestamp) {
         super(timestamp, description);
         this.accountNumber = accountNumber;
         this.cardNumber = cardNumber;

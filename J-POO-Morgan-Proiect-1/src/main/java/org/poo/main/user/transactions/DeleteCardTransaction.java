@@ -10,8 +10,9 @@ public class DeleteCardTransaction extends Transaction {
     @JsonProperty("account")
     private String account;
 
-    public DeleteCardTransaction(String description, String cardNumber, String cardHolder,
-                                 String account, int timestamp) {
+    public DeleteCardTransaction(final String description, final String cardNumber,
+                                 final String cardHolder, final String account,
+                                 final int timestamp) {
         super(timestamp, description);
         this.cardNumber = cardNumber;
         this.cardHolder = cardHolder;
