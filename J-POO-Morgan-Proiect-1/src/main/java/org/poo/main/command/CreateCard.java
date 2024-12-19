@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class CreateCard extends Command {
     private String account;
     private String email;
+    private String generatedNumber;
 
     public CreateCard(ArrayList<Client> clients, String account, String email, int timestamp) {
         super(clients, timestamp);

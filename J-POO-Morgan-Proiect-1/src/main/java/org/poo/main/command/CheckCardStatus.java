@@ -1,12 +1,14 @@
 package org.poo.main.command;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Getter;
 import org.poo.main.patterns.Visitor;
 import org.poo.main.user.Client;
 
 import java.util.ArrayList;
 
 public class CheckCardStatus extends Command {
+    @Getter
     private String cardNumber;
 
     public CheckCardStatus(ArrayList<Client> clients, String cardNumber, int timestamp) {

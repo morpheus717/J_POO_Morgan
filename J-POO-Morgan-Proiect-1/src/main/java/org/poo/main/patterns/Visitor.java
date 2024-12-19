@@ -25,4 +25,21 @@ public interface Visitor {
     public void visitSetMinBalance(SetMinBalance command);
 
     public ObjectNode visitCheckCardStatus(CheckCardStatus command);
+
+    public ObjectNode visitPayOnline(PayOnline command);
+
+    public ObjectNode visitSendMoney(SendMoney command);
+
+    public void visitSetAlias(SetAlias command);
+
+    public ObjectNode visitPrintTransactions(PrintTransactions command);
+
+    public void visitChangeInterest(ChangeInterestRate command);
+
+    public void visitSplitPayment(SplitPayment command);
+
+    public ObjectNode visitReport(Report command);
+
+    public ObjectNode visitSpendingsReport(SpendingsReport command);
+
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class DeleteCard extends Command {
     private String cardNumber;
     private String email;
+    private String account;
 
     public DeleteCard(ArrayList<Client> clients, String cardNumber, String email, int timestamp) {
         super(clients, timestamp);

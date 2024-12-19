@@ -14,6 +14,7 @@ public class AddAccount extends Command {
     private String currency;
     private String accountType;
     private double interestRate;
+    private String generatedIban;
 
     public AddAccount(ArrayList<Client> clients, String email, String currency, String accountType,
                       double interestRate, int timestamp) {

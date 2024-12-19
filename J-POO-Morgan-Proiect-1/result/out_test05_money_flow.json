@@ -72,7 +72,7 @@
     "lastName" : "Popa",
     "email" : "Decebal_Popa@gmail.ro",
     "accounts" : [ {
-      "balance" : 898.0,
+      "balance" : 385.0,
       "currency" : "RON",
       "type" : "classic",
       "cards" : [ {
@@ -81,7 +81,7 @@
       } ],
       "IBAN" : "RO58POOB7344468893732422"
     }, {
-      "balance" : 7050.0,
+      "balance" : 6694.0,
       "currency" : "RON",
       "type" : "classic",
       "cards" : [ {
@@ -95,7 +95,7 @@
     "lastName" : "Munoz de Gautier",
     "email" : "Emmanuel_Munoz_de_Gautier@gmail.fr",
     "accounts" : [ {
-      "balance" : 5976.0,
+      "balance" : 5875.0,
       "currency" : "EUR",
       "type" : "classic",
       "cards" : [ {

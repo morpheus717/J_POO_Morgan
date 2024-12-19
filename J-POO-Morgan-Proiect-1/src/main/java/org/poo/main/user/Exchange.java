@@ -8,9 +8,16 @@ public class Exchange {
     private String from;
     private String to;
     private double rate;
+
     public Exchange(String from, String to, double rate) {
         this.from = from;
         this.to = to;
         this.rate = rate;
+    }
+
+    public Exchange(Exchange exchange) {
+        this.from = exchange.getFrom();
+        this.to = exchange.getTo();
+        this.rate = exchange.getRate();
     }
 }

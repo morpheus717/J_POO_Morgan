@@ -45,7 +45,7 @@
     "lastName" : "Cabrera",
     "email" : "Patrick_Cabrera@hotmail.us",
     "accounts" : [ {
-      "balance" : 557.0,
+      "balance" : 75.0,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ {
@@ -59,7 +59,7 @@
     "lastName" : "Thomas",
     "email" : "Leslie_Thomas@yahoo.us",
     "accounts" : [ {
-      "balance" : 6630.0,
+      "balance" : 7011.0,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ ],
@@ -70,7 +70,7 @@
     "lastName" : "Devaux",
     "email" : "Elise_Devaux@outlook.fr",
     "accounts" : [ {
-      "balance" : 6900.0,
+      "balance" : 6980.8,
       "currency" : "EUR",
       "type" : "classic",
       "cards" : [ ],
@@ -85,7 +85,7 @@
     "lastName" : "Cabrera",
     "email" : "Patrick_Cabrera@hotmail.us",
     "accounts" : [ {
-      "balance" : 557.0,
+      "balance" : 1729.0,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ {
@@ -99,7 +99,7 @@
     "lastName" : "Thomas",
     "email" : "Leslie_Thomas@yahoo.us",
     "accounts" : [ {
-      "balance" : 13109.0,
+      "balance" : 11836.0,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ ],
@@ -110,7 +110,7 @@
     "lastName" : "Devaux",
     "email" : "Elise_Devaux@outlook.fr",
     "accounts" : [ {
-      "balance" : 6900.0,
+      "balance" : 6980.8,
       "currency" : "EUR",
       "type" : "classic",
       "cards" : [ ],

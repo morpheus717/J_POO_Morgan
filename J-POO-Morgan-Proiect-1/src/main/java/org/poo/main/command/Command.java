@@ -41,6 +41,8 @@ public abstract class Command {
     }
 
     public Card findByNumber(String number, Client client) {
+        if (client == null)
+            return null;
         for (Account account : client.getAccounts()) {
             for (Card card : account.getCards()) {
                 if (card.getCardNumber().equals(number)) {
@@ -50,6 +52,62 @@ public abstract class Command {
         }
         return null;
     }
+
+    public Account findByCardNumber(String cardNumber, Client client) {
+        if (client == null)
+            return null;
+        for (Account account : client.getAccounts()) {
+            for (Card card : account.getCards()) {
+                if (card.getCardNumber().equals(cardNumber)) {
+                    return account;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Card findByCardNumber(String cardNumber, Account account) {
+        if (account == null)
+            return null;
+        for (Card card : account.getCards()) {
+            if (card.getCardNumber().equals(cardNumber)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public Account findByAlias(String alias, Client client) {
+        String acc = client.getAliases().get(alias);
+        if (acc != null) {
+            return findByIban(acc, client);
+        }
+        return null;
+    }
+
+    public Account findByAlias(String alias) {
+        for (Client client : clients) {
+            String acc = client.getAliases().get(alias);
+            if (acc != null) {
+                return findByIban(acc, client);
+            }
+        }
+        return null;
+    }
+
+    public Account findByCardNumber(String cardNumber) {
+        for (Client client : clients) {
+            for (Account account : client.getAccounts()) {
+                for (Card card : account.getCards()) {
+                    if (card.getCardNumber().equals(cardNumber)) {
+                        return account;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 
     public abstract ObjectNode accept(Visitor visitor);
 }

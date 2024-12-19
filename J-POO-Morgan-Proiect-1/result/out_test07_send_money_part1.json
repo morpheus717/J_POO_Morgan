@@ -5,7 +5,7 @@
     "lastName" : "Diaconu",
     "email" : "Madalin_Diaconu@hotmail.ro",
     "accounts" : [ {
-      "balance" : 283.0,
+      "balance" : 173.0,
       "currency" : "RON",
       "type" : "classic",
       "cards" : [ ],
@@ -16,7 +16,7 @@
     "lastName" : "Stoica",
     "email" : "Iulia_Stoica@hotmail.ro",
     "accounts" : [ {
-      "balance" : 513.0,
+      "balance" : 623.0,
       "currency" : "RON",
       "type" : "classic",
       "cards" : [ ],
@@ -31,7 +31,7 @@
     "lastName" : "Diaconu",
     "email" : "Madalin_Diaconu@hotmail.ro",
     "accounts" : [ {
-      "balance" : 283.0,
+      "balance" : 173.0,
       "currency" : "RON",
       "type" : "classic",
       "cards" : [ ],
@@ -42,7 +42,7 @@
     "lastName" : "Stoica",
     "email" : "Iulia_Stoica@hotmail.ro",
     "accounts" : [ {
-      "balance" : 513.0,
+      "balance" : 623.0,
       "currency" : "RON",
       "type" : "classic",
       "cards" : [ ],

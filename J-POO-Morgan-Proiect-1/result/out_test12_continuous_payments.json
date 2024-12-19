@@ -5,7 +5,7 @@
     "lastName" : "Price",
     "email" : "Brian_Price@hotmail.us",
     "accounts" : [ {
-      "balance" : 1430.0,
+      "balance" : 1180.0,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ {
@@ -54,13 +54,43 @@
   } ],
   "timestamp" : 9
 }, {
+  "command" : "printTransactions",
+  "output" : [ {
+    "timestamp" : 1,
+    "description" : "New account created"
+  }, {
+    "timestamp" : 5,
+    "description" : "New card created",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422",
+    "card" : "8207906978464446"
+  }, {
+    "timestamp" : 6,
+    "description" : "Card payment",
+    "amount" : 130.0,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 7,
+    "description" : "Card payment",
+    "amount" : 120.0,
+    "commerciant" : "Zara"
+  } ],
+  "timestamp" : 14
+}, {
+  "command" : "printTransactions",
+  "output" : [ {
+    "timestamp" : 8,
+    "description" : "New account created"
+  } ],
+  "timestamp" : 15
+}, {
   "command" : "printUsers",
   "output" : [ {
     "firstName" : "Brian",
     "lastName" : "Price",
     "email" : "Brian_Price@hotmail.us",
     "accounts" : [ {
-      "balance" : 1430.0,
+      "balance" : 1141.3,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ {
@@ -77,7 +107,7 @@
     "lastName" : "Duval",
     "email" : "Guillaume_Duval@gmail.fr",
     "accounts" : [ {
-      "balance" : 164.0,
+      "balance" : 161.0,
       "currency" : "EUR",
       "type" : "classic",
       "cards" : [ {
@@ -121,12 +151,128 @@
   } ],
   "timestamp" : 24
 }, {
+  "command" : "printTransactions",
+  "output" : [ {
+    "timestamp" : 1,
+    "description" : "New account created"
+  }, {
+    "timestamp" : 5,
+    "description" : "New card created",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422",
+    "card" : "8207906978464446"
+  }, {
+    "timestamp" : 6,
+    "description" : "Card payment",
+    "amount" : 130.0,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 7,
+    "description" : "Card payment",
+    "amount" : 120.0,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 18,
+    "description" : "New card created",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422",
+    "card" : "7004757825892043"
+  }, {
+    "timestamp" : 21,
+    "description" : "Card payment",
+    "amount" : 38.7,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 26,
+    "description" : "Netflix subscription renewal",
+    "amount" : "242.0 USD",
+    "transferType" : "sent",
+    "senderIBAN" : "RO58POOB7344468893732422",
+    "receiverIBAN" : "RO65POOB8944016386845896"
+  } ],
+  "timestamp" : 28
+}, {
+  "command" : "payOnline",
+  "output" : {
+    "timestamp" : 30,
+    "description" : "Card not found"
+  },
+  "timestamp" : 30
+}, {
+  "command" : "printTransactions",
+  "output" : [ {
+    "timestamp" : 1,
+    "description" : "New account created"
+  }, {
+    "timestamp" : 5,
+    "description" : "New card created",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422",
+    "card" : "8207906978464446"
+  }, {
+    "timestamp" : 6,
+    "description" : "Card payment",
+    "amount" : 130.0,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 7,
+    "description" : "Card payment",
+    "amount" : 120.0,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 18,
+    "description" : "New card created",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422",
+    "card" : "7004757825892043"
+  }, {
+    "timestamp" : 21,
+    "description" : "Card payment",
+    "amount" : 38.7,
+    "commerciant" : "Zara"
+  }, {
+    "timestamp" : 26,
+    "description" : "Netflix subscription renewal",
+    "amount" : "242.0 USD",
+    "transferType" : "sent",
+    "senderIBAN" : "RO58POOB7344468893732422",
+    "receiverIBAN" : "RO65POOB8944016386845896"
+  }, {
+    "timestamp" : 29,
+    "description" : "The card has been destroyed",
+    "card" : "7004757825892043",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422"
+  }, {
+    "timestamp" : 31,
+    "description" : "Card payment",
+    "amount" : 70.0,
+    "commerciant" : "McDonalds"
+  }, {
+    "timestamp" : 32,
+    "description" : "New card created",
+    "cardHolder" : "Brian_Price@hotmail.us",
+    "account" : "RO58POOB7344468893732422",
+    "card" : "1322658752653937"
+  } ],
+  "timestamp" : 34
+}, {
   "command" : "deleteAccount",
   "output" : {
-    "success" : "Account deleted",
+    "error" : "Account couldn't be deleted - see org.poo.transactions for details",
     "timestamp" : 37
   },
   "timestamp" : 37
+}, {
+  "command" : "printTransactions",
+  "output" : [ {
+    "timestamp" : 35,
+    "description" : "New account created"
+  }, {
+    "timestamp" : 40,
+    "description" : "Insufficient funds"
+  } ],
+  "timestamp" : 42
 }, {
   "command" : "deleteAccount",
   "output" : {
@@ -141,7 +287,7 @@
     "lastName" : "Price",
     "email" : "Brian_Price@hotmail.us",
     "accounts" : [ {
-      "balance" : 6520.0,
+      "balance" : 5919.3,
       "currency" : "USD",
       "type" : "classic",
       "cards" : [ {
@@ -158,7 +304,7 @@
     "lastName" : "Duval",
     "email" : "Guillaume_Duval@gmail.fr",
     "accounts" : [ {
-      "balance" : 164.0,
+      "balance" : 161.0,
       "currency" : "EUR",
       "type" : "classic",
       "cards" : [ {
@@ -188,7 +334,13 @@
     "firstName" : "James",
     "lastName" : "Pace",
     "email" : "James_Pace@gmail.us",
-    "accounts" : [ ]
+    "accounts" : [ {
+      "balance" : 242.0,
+      "currency" : "USD",
+      "type" : "classic",
+      "cards" : [ ],
+      "IBAN" : "RO65POOB8944016386845896"
+    } ]
   }, {
     "firstName" : "Ivona",
     "lastName" : "Aane",
@@ -213,4 +365,11 @@
     } ]
   } ],
   "timestamp" : 46
+}, {
+  "command" : "printTransactions",
+  "output" : [ {
+    "timestamp" : 36,
+    "description" : "New account created"
+  } ],
+  "timestamp" : 52
 } ]
