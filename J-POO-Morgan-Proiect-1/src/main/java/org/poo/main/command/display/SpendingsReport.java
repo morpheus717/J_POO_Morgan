@@ -2,7 +2,10 @@ package org.poo.main.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.poo.main.patterns.Visitor;
+import org.poo.main.Bank;
+import org.poo.main.patterns.AccountVisitor;
+import org.poo.main.patterns.SpendingsReportVisitor;
+import org.poo.main.user.Account;
 import org.poo.main.user.Client;
 
 import java.util.ArrayList;
@@ -10,20 +13,20 @@ import java.util.ArrayList;
 public final class SpendingsReport extends Report {
 
     public SpendingsReport(final String account, final int startTimestamp,
-                           final int endTimestamp, final ArrayList<Client> clients,
-                           final int timestamp) {
-        super(account, startTimestamp, endTimestamp, clients, timestamp);
+                           final int endTimestamp, final int timestamp) {
+        super(account, startTimestamp, endTimestamp, timestamp);
     }
 
-    /**
-     * Accepts a visitor to perform the 'SpendingsReport' operation.
-     *
-     * @param visitor The visitor that will handle this command.
-     * @return The result of the visitor's operation, typically an ObjectNode.
-     */
     @Override
-    public ObjectNode accept(final Visitor visitor) {
-        return visitor.visitSpendingsReport(this);
+    public ObjectNode execute() {
+        Account acc = Bank.findByIban(super.getAccount());
+        if (acc == null) {
+            return accountNotFound();
+        }
+        return acc.accept(new SpendingsReportVisitor(),
+                super.getTimestamp(),
+                super.getStartTimestamp(),
+                super.getEndTimestamp());
     }
 
     /**

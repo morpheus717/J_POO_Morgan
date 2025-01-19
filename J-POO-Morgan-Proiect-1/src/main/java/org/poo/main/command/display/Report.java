@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
-import org.poo.main.patterns.Visitor;
+import org.poo.main.Bank;
+import org.poo.main.patterns.AccountVisitor;
+import org.poo.main.patterns.ReportVisitor;
+import org.poo.main.user.Account;
 import org.poo.main.user.Client;
 
 import java.util.ArrayList;
@@ -15,22 +18,24 @@ public class Report extends Command {
     private int startTimestamp;
     private int endTimestamp;
 
-    public Report(final String account, final int startTimestamp, final int endTimestamp,
-                  final ArrayList<Client> clients, final int timestamp) {
-        super(clients, timestamp);
+    public Report(final String account, final int startTimestamp,
+                  final int endTimestamp, final int timestamp) {
+        super(timestamp);
         this.account = account;
         this.startTimestamp = startTimestamp;
         this.endTimestamp = endTimestamp;
     }
 
-    /**
-     * Accept method for the visitor pattern.
-     *
-     * @param visitor The visitor that processes the report.
-     * @return A response from the visitor processing the report.
-     */
-    public ObjectNode accept(final Visitor visitor) {
-        return visitor.visitReport(this);
+    public ObjectNode execute() {
+        Account acc = Bank.findByIban(account);
+        if (acc == null) {
+            return accountNotFound();
+        }
+        return acc.accept(
+                new ReportVisitor(),
+                super.getTimestamp(),
+                startTimestamp,
+                endTimestamp);
     }
 
     /**
