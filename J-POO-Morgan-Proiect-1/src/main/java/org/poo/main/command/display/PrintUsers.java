@@ -1,9 +1,10 @@
-package org.poo.main.command;
+package org.poo.main.command.display;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.poo.main.Main;
+import org.poo.main.command.Command;
 import org.poo.main.user.Client;
 
 import java.util.ArrayList;

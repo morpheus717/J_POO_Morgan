@@ -1,0 +1,29 @@
+commit 39aa978d61afdb35436a0993d8c219279f16c715
+Author: Vlad David <vlad.mihail10@gmail.com>
+Date:   Thu Dec 19 23:14:20 2024 +0200
+
+    Styled the code, added comments and modified the README
+
+commit 433a3d178843a5ccb8ef4bd15b5f28f5ef84cc25
+Author: Vlad David <vlad.mihail10@gmail.com>
+Date:   Thu Dec 19 17:02:59 2024 +0200
+
+    added most of the functionalities
+
+commit 165358e88310233f31740a2cca4a224ae132c066
+Author: Vlad David <vlad.mihail10@gmail.com>
+Date:   Mon Dec 16 00:15:14 2024 +0200
+
+    Added basic functionalities like create account and card and delete account and card. Also implemented the workflow
+
+commit d883db7e86722faece1d6be3ea788c169ef4a91f
+Author: David Vlad-Mihail <99807458+morpheus717@users.noreply.github.com>
+Date:   Fri Dec 13 19:19:10 2024 +0200
+
+    Add files via upload
+
+commit 84e26ddec4da7757d79fa01afd152d8dac15975b
+Author: David Vlad-Mihail <99807458+morpheus717@users.noreply.github.com>
+Date:   Fri Dec 13 19:18:17 2024 +0200
+
+    Initial commit

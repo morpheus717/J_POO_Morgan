@@ -1,32 +1,34 @@
 package org.poo.main.user;
 
-import org.poo.main.command.PayOnline;
+import org.poo.main.command.payment.PayOnline;
 import org.poo.main.user.transactions.CreateCardTransaction;
 import org.poo.main.user.transactions.DeleteCardTransaction;
 import org.poo.utils.Utils;
 
 public class OneTimeCard extends Card {
 
-    public OneTimeCard(final String cardNumber, final String status) {
-        super(cardNumber, status);
+    public OneTimeCard(final String cardNumber, final String status, final Account account) {
+        super(cardNumber, status, account);
     }
 
     /**
      * The purpose of this method is to include the mechanism of removing the one time card
      * and adding a new one
-     * @param myAcc Account to pay from
      */
     @Override
-    public void pay(final Account myAcc, final PayOnline command) {
-        super.pay(myAcc, command);
-        myAcc.getCards().remove(this);
-        String cardNumber = Utils.generateCardNumber();
-        myAcc.getCards().add(new OneTimeCard(cardNumber, "active"));
-        DeleteCardTransaction transaction = new DeleteCardTransaction("The card has been destroyed",
-                this.getCardNumber(), command.getEmail(), myAcc.getIban(), command.getTimestamp());
-        CreateCardTransaction transaction1 = new CreateCardTransaction(myAcc.getIban(), cardNumber,
-                command.getEmail(), "New card created", command.getTimestamp());
-        myAcc.getTransactions().add(transaction);
-        myAcc.getTransactions().add(transaction1);
+    public boolean pay(final PayOnline command) {
+        if (!super.pay(command))
+            return false;
+        super.getAccount().getCards().remove(this);
+        super.getAccount().getTransactions().add(
+                new DeleteCardTransaction(super.getCardNumber(), command.getEmail(),
+                        super.getAccount().getIban(), command.getTimestamp()));
+        String number = Utils.generateCardNumber();
+        super.getAccount().getCards().add(new OneTimeCard(
+                number, "active", super.getAccount()));
+        super.getAccount().getTransactions().add(
+                new CreateCardTransaction(super.getAccount().getIban(),
+                        number, command.getEmail(), "New card created", command.getTimestamp()));
+        return true;
     }
 }

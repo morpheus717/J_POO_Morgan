@@ -3,6 +3,7 @@ package org.poo.main.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import org.poo.main.user.transactions.Transaction;
@@ -48,5 +49,19 @@ public class Client {
         }
         transactions.sort((t1, t2) -> t1.getTimestamp() - t2.getTimestamp());
         return mapper.valueToTree(transactions);
+    }
+
+    public ObjectNode toJSON() {
+        ObjectNode userNode = new ObjectMapper().createObjectNode();
+        userNode.put("firstName", firstName);
+        userNode.put("lastName", lastName);
+        userNode.put("email", email);
+
+        ArrayNode accountsNode = new ObjectMapper().createArrayNode();
+        for (Account account : accounts) {
+            accountsNode.add(account.toJSON());
+        }
+        userNode.set("accounts", accountsNode);
+        return userNode;
     }
 }

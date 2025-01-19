@@ -1,5 +1,7 @@
 package org.poo.main.user.transactions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,12 @@ public class Transaction {
         this.description = description;
     }
 
+    public ObjectNode toJson() {
+        ObjectNode objectNode = new ObjectMapper().createObjectNode();
+        objectNode.put("timestamp", timestamp);
+        objectNode.put("description", description);
+        return objectNode;
+    }
     /**
      * The purpose of this method is to filter Spending type transactions by being overriden
      * @return always null

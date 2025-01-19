@@ -1,4 +1,4 @@
-package org.poo.main.command;
+package org.poo.main.command.management;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import org.poo.main.user.Client;
 import org.poo.main.user.OneTimeCard;
 import org.poo.main.user.transactions.CreateCardTransaction;
 import org.poo.utils.Utils;
-
-import java.util.ArrayList;
 
 @Getter
 @Setter

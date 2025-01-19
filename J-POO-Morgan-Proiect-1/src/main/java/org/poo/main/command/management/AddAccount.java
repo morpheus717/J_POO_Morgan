@@ -1,18 +1,17 @@
-package org.poo.main.command;
+package org.poo.main.command.management;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import org.poo.main.Bank;
 import org.poo.main.Main;
+import org.poo.main.command.Command;
 import org.poo.main.user.Account;
 import org.poo.main.user.Client;
 import org.poo.main.user.SavingsAccount;
 import org.poo.main.user.transactions.AddAccountTransaction;
 import org.poo.main.user.transactions.Transaction;
 import org.poo.utils.Utils;
-
-import java.util.ArrayList;
 
 @Getter @Setter
 public class AddAccount extends Command {

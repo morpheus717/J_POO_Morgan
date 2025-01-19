@@ -1,13 +1,12 @@
-package org.poo.main.command;
+package org.poo.main.command.display;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import org.poo.main.Bank;
+import org.poo.main.command.Command;
 import org.poo.main.user.Client;
-
-import java.util.ArrayList;
 
 @Setter
 @Getter

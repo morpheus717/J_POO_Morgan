@@ -1,17 +1,14 @@
-package org.poo.main.command;
+package org.poo.main.command.payment;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import org.poo.main.Bank;
 import org.poo.main.Main;
+import org.poo.main.command.Command;
 import org.poo.main.user.Card;
 import org.poo.main.user.Client;
 import org.poo.main.user.transactions.Transaction;
-import org.poo.utils.Pair;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @Getter @Setter
 public final class PayOnline extends Command {
